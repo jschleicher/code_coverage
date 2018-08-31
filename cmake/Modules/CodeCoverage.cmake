@@ -147,10 +147,11 @@ function(ADD_CODE_COVERAGE)
         COMMAND ${CMAKE_COMMAND} -E remove ${Coverage_NAME}.base ${Coverage_NAME}.total ${PROJECT_BINARY_DIR}/${Coverage_NAME}.info.cleaned
 
         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
-        DEPENDS ${Coverage_NAME}_cleanup
         DEPENDS _run_tests_${PROJECT_NAME}
         COMMENT "Processing code coverage counters and generating report."
     )
+
+    add_dependencies(_run_tests_${PROJECT_NAME} ${Coverage_NAME}_cleanup)
 
     # Show where to find the lcov info report
     add_custom_command(TARGET ${Coverage_NAME} POST_BUILD
